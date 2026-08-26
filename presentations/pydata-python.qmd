@@ -218,19 +218,40 @@ This is part of the reason why in some courses you'll use a **cloud-based soluti
 
 ::::
 
+# Version Control {background-color="#288DC2"}
+
+## 
+
+:::: {.columns .v-center}
+
+::: {.column width="40%"}
+![](../../figures/logo_github.png){fig-align="center"}
+:::
+
+::: {.column width="60%"}
+::: {.incremental}
+- GitHub hosts version-controlled project repositories managed with Git
+- It is the industry standard for software development and data projects
+- Using GitHub enables collaboration and the creation of a portfolio of work
+:::
+:::
+
+::::
+
+## 
+
+::: {.v-center}
+![](../figures/example-resume.png){fig-align="center"}
+:::
+
 <!-- 
 
-- GitHub
 - Data engineering and coding for production
 - Brief AI discussion
 - More importantly — you have human help! Professors, TAs, ASC, Peers
 - Ending slide summarizing, details for 20 min work
-  - Skills they don't have to know now, but that they might come across and kind of the big picture/framework for where these tools could be useful
-- Final slide promoting ASC Workshops (repeat of this)
 
 -->
-
-
 
 ## 
 

@@ -176,13 +176,52 @@ This is part of the reason why in some courses you'll use a **cloud-based soluti
 
 ::::
 
+# Python Scripts and Notebooks {background-color="#288DC2"}
+
+## 
+
+![](../figures/positron-01_console-session.png){fig-align="center"}
+
+## 
+
+:::: {.columns .v-center}
+
+::: {.column width="33%" .fragment fragment-index=1}
+![](../figures/logo_marimo.png){fig-align="center"}
+:::
+
+::: {.column width="33%"}
+![](../figures/logo_jupyter.png){fig-align="center"}
+:::
+
+::: {.column width="33%" .fragment fragment-index=2}
+![](../figures/logo_quarto.png){fig-align="center"}
+:::
+
+::::
+
+## 
+
+:::: {.columns .v-center}
+
+::: {.column width="40%"}
+![](../figures/logo_jupyter.png){fig-align="center"}
+:::
+
+::: {.column width="60%"}
+::: {.incremental}
+- Notebooks combine code and markdown, perfect for documenting a process and creating reports
+- Jupyter notebooks don't play well with GitHub while Marimo and Quarto do
+- Quarto notebooks can be rendered into PDFs, Word documents, presentation slides, etc.
+:::
+:::
+
+::::
+
 <!-- 
 
-- Not a knife, a Swiss Army knife — context matters for use
-  - Notebooks (Jupyter, Marimo, Quarto) and scripts
-  - “Data science involves coding, but it isn’t coding only”
-  - Data engineering and coding for production
 - GitHub
+- Data engineering and coding for production
 - Brief AI discussion
 - More importantly — you have human help! Professors, TAs, ASC, Peers
 - Ending slide summarizing, details for 20 min work
@@ -191,9 +230,7 @@ This is part of the reason why in some courses you'll use a **cloud-based soluti
 
 -->
 
-# {background-color="#0F2439"}
 
-![](../figures/pydata-northern-utah.png){fig-align="center"}
 
 ## 
 

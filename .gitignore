@@ -23,3 +23,6 @@
 !/code/src/*.py
 !/code/src/*.cpp
 !/code/src/*.stan
+
+/.quarto/
+**/*.quarto_ipynb

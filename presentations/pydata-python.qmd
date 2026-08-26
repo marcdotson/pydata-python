@@ -107,16 +107,82 @@ jupyter: python3
 
 ::::
 
+# Python Environments {background-color="#288DC2"}
+
+## 
+
+![](../figures/xkcd_python-env.png){fig-align="center"}
+
+## Managing your Python environment
+
+A Python environment is composed of the **Python version** and **library versions** (including dependencies)
+
+```{python}
+#| code-line-numbers: "|1-3|1,3,5-7|2,18-21"
+
+import polars as pl
+import seaborn.objects as so
+import os
+
+# Load data.
+customer_data = pl.read_csv(os.path.join('data', 'customer_data.csv'))
+store_transactions = pl.read_csv(os.path.join('data', 'store_transactions.csv'))
+
+(customer_data
+  .join(store_transactions, on='customer_id', how='left')
+  .filter(pl.col('region') == 'West', pl.col('feb_2005') == pl.col('feb_2005').max())
+  .with_columns(age = 2024 - pl.col('birth_year'))
+  .select(pl.col(['age', 'feb_2005']))
+  .sort(pl.col('age'), descending=True)
+  .slice(0, 1)
+)
+
+# Customers by region.
+(so.Plot(customer_data, x = 'region')
+  .add(so.Bar(), so.Hist())
+)
+```
+
+## Managing your Python environment
+
+A Python environment is composed of the **Python version** and **library versions** (including dependencies) and it is not uncommon for different projects to require **different Python versions** and **different library versions**
+
+::: {.incremental}
+- A **virtual environment** (a.k.a., a **project environment**) is a self-contained, project-specific environment
+- Project environments can be **reproduced on another machine** by you (including future you) or someone else
+- If you need to reproduce something about your machine beyond your code, Python version, and library versions, you'll want to use a **container**
+:::
+
+::: {.fragment}
+This is part of the reason why in some courses you'll use a **cloud-based solution** (e.g., Google Colab) where the Python environment is managed for you
+:::
+
+## 
+
+:::: {.columns .v-center}
+
+::: {.column width="40%"}
+![](../figures/logo_uv.png){fig-align="center"}
+:::
+
+::: {.column width="60%"}
+::: {.incremental}
+- uv has rapidly emerged as the industry standard for managing Python environments
+- A single tool to replace conda, pip, poetry, pyenv, virtualenv, etc.
+- Installable via the command line (i.e., the programming interface into your OS itself)
+- Integrated with Positron to bootstrap Python installation and environment management
+:::
+:::
+
+::::
+
 <!-- 
 
-- “The second best programming language for everything”
-  - Local installation (uv, conda, etc.)
-  - Libraries, project/virtual environments (uv, venv, etc.), and Docker
-  - Virtual machines (including Colab, GitHub)
 - Not a knife, a Swiss Army knife — context matters for use
   - Notebooks (Jupyter, Marimo, Quarto) and scripts
   - “Data science involves coding, but it isn’t coding only”
   - Data engineering and coding for production
+- GitHub
 - Brief AI discussion
 - More importantly — you have human help! Professors, TAs, ASC, Peers
 - Ending slide summarizing, details for 20 min work
@@ -124,227 +190,6 @@ jupyter: python3
 - Final slide promoting ASC Workshops (repeat of this)
 
 -->
-
-# Python Environments {background-color="#288DC2"}
-
-## 
-
-![](../figures/xkcd_python-env.png){fig-align="center"}
-
-## What is a Python environment?
-
-A Python environment is composed of the **Python version** and **library versions** (including dependencies)
-
-::: {.fragment}
-![](../figures/env-01.png){fig-align="center" width="65%"}
-:::
-
-## Why manage your Python environments?
-
-It is not uncommon for different projects to require **different Python versions** and **different library versions**
-
-::: {.fragment}
-![](../figures/env-02.png){fig-align="center" width="65%"}
-:::
-
-## Why manage your Python environments? {visibility="uncounted"}
-
-It is not uncommon for different projects to require **different Python versions** and **different library versions**
-
-![](../figures/env-03.png){fig-align="center" width="65%"}
-
-# Welcome to "dependency hell"
-
-## What makes a Python environment virtual?
-
-A Python **virtual environment** (a.k.a., a **project environment**) is a self-contained, project-specific environment
-
-::: {.fragment}
-![](../figures/env-04.png){fig-align="center" width="65%"}
-:::
-
-## My code works on my machine, so what?
-
-Project environments can be **reproduced on another machine** by you (including future you) or someone else
-
-::: {.incremental}
-1. Code
-2. Code, Python version, and library versions
-3. Code, Python version, library versions, and OS
-:::
-
-## My code works on my machine, so what? {visibility="uncounted"}
-
-Project environments can be **reproduced on another machine** by you (including future you) or someone else
-
-1. Code
-2. Code, Python version, and library versions
-3. ~~Code, Python version, library versions, and OS~~
-
-If you need to reproduce something about your machine beyond your code, Python version, and library versions, you'll want to use a **container**
-
-## Why `uv`?
-
-`uv` is an **extremely fast** Python package and project manager, written in Rust
-
-::: {.incremental}
-- A single tool to replace `conda`, `pip`, `poetry`, `pyenv`, `virtualenv`, etc.
-- Installable via the command line without Rust or Python
-- Supports macOS, Linux, and Windows
-- Easy to integrate with or transfer from existing tools
-:::
-
-# Walkthrough {background-color="#288DC2"}
-
-## 
-
-![](../figures/github-repo.png){fig-align="center"}
-
-## Install `uv`
-
-Get started by [installing `uv`](https://docs.astral.sh/uv/getting-started/installation/) via the **command line** (i.e., the programming interface into your OS itself)
-
-**macOS and Linux via Terminal**
-
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-```
-
-**Windows via PowerShell**
-
-```powershell
-powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-```
-
-Restart your command line and run `uv` to verify it has been installed
-
-## Install and manage Python versions
-
-Once you have `uv` installed, it’s easy to install and manage Python different versions from the command line
-
-::: {.incremental}
-- Install the latest stable Python release with `uv python install`
-- Install a specific Python version, like `uv python install 3.13.4`
-- View Python versions you can install with `uv python list`
-- Find which Python versions you have installed with `uv python find`
-- Uninstall a specific Python version, like `uv python uninstall 3.13.4`
-:::
-
-::: {.fragment}
-There's lots more `uv` can do to [manage Python versions](https://docs.astral.sh/uv/guides/install-python/)
-:::
-
-## Create or navigate to a project directory
-
-Using the command line or a code editor (i.e., [VS Code](https://code.visualstudio.com), [Cursor](https://cursor.com), [Positron](https://posit.co/products/ide/positron/), etc.), create or navigate to a project directory, preferably one that is **not being synced to the cloud** via OneDrive, iCloud, etc.
-
-**macOS and Linux via Terminal**
-
-```bash
-cd ~/Desktop
-mkdir uv-practice
-cd uv-practice
-```
-
-**Windows via PowerShell**
-
-```powershell
-cd Desktop
-mkdir uv-practice
-cd uv-practice
-```
-
-Dragging a folder from your finder/file explorer and dropping it into the terminal/shell will paste its file path
-
-## Initialize a project environment
-
-Run `uv init` to **initialize a project environment** in your project directory and create a `pyproject.toml` file, the Python standard for defining configurations for a project, along with
-
-:::: {.columns}
-
-::: {.column width="60%"}
-- `.gitignore` is a hidden file for turning your project directory into a Git repository
-- `.python-version` is a hidden file that specifies the version of Python for the project
-- `main.py` is a Python script you can use or delete
-- `README.md` is a markdown file that is also used in Git repositories that you can use or delete
-:::
-
-::: {.column width="40%"}
-```text
-uv-practice
-├── .gitignore
-├── .python-version
-├── main.py
-├── pyproject.toml
-└── README.md
-```
-:::
-
-::::
-
-## Install libraries
-
-With the project environment initialized, we can now install libraries, like `uv add polars`, which will install the Polars library along with any dependecies, along with
-With the project environment initialized, we can now install libraries, like `uv add polars`, which will install the Polars library along with any dependecies, along with
-
-:::: {.columns}
-
-::: {.column width="60%"}
-- `uv.lock` file that keeps track of the library versions you've installed
-- `.venv` a hidden folder that contains the libraries for the project environment
-:::
-
-::: {.column width="40%"}
-```text
-uv-practice
-├── .venv
-├── .gitignore
-├── .python-version
-├── main.py
-├── pyproject.toml
-├── README.md
-└── uv.lock
-```
-:::
-
-::::
-
-## And you're ready to code
-
-That's it! You now have a project environment managed by `uv` and can go ahead and run Python code
-
-For example, using data from [github.com/marcdotson/pydata-uv](https://github.com/marcdotson/pydata-uv), replace the code in `main.py` with the following
-
-```{python}
-import os
-import polars as pl
-
-customer_data = pl.read_csv(os.path.join('data', 'customer_data.csv'))
-
-count_df = (customer_data
-  .group_by(pl.col(['region', 'college_degree']))
-  .agg(n = pl.len())
-)
-
-print(count_df)
-```
-
-Then run `uv run python main.py` from the command line
-
-## Other details
-
-You'll probably be using a code editor (i.e., [VS Code](https://code.visualstudio.com), [Cursor](https://cursor.com), [Positron](https://posit.co/products/ide/positron/), etc.), and you'll have to make sure you open the project directory (i.e., `uv-practice`) in the code editor and make sure the code editor **activates the project environment**
-
-::: {.incremental}
-- Whenever you install new libraries using `uv add <library>`, the `uv.lock` file is automatically updated
-- If you're starting with an existing project environment, `uv run` automatically installs any missing libraries from the `uv.lock` file
-- If you need to share your project enviornment in the form of a `requirements.txt`, run `uv export --format requirements.txt`
-- If you need to share your project enviornment in the form of a `pylock.toml`, run `uv export -o pylock.toml`
-:::
-
-::: {.fragment}
-There's a *lot* more that [uv](https://docs.astral.sh/uv/) can do
-:::
 
 # {background-color="#0F2439"}
 

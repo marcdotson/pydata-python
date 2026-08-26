@@ -244,14 +244,18 @@ This is part of the reason why in some courses you'll use a **cloud-based soluti
 ![](../figures/example-resume.png){fig-align="center"}
 :::
 
-<!-- 
+# Miscellaneous {background-color="#288DC2"}
 
-- Data engineering and coding for production
-- Brief AI discussion
-- More importantly — you have human help! Professors, TAs, ASC, Peers
-- Ending slide summarizing, details for 20 min work
+## Concluding thoughts
 
--->
+Code is transparent and reproducible, but Python is a *big tent* so follow your course instructions
+
+::: {.incremental}
+- Coding for a custom analysis vs. coding for production
+- Code is interactive -- leverage it to practice what you're learning
+- AI can accelerate productivity, but it can't replace learning
+- You have human help -- professors, peers, TAs, the ASC, etc.
+:::
 
 ## 
 
@@ -271,4 +275,32 @@ This is part of the reason why in some courses you'll use a **cloud-based soluti
 :::
 
 ::::
+
+## 
+
+:::: {.columns .v-center}
+
+::: {.column width="40%"}
+![](../figures/qr-code_pydata.png){fig-align="center" width="80%"}
+:::
+
+::: {.column width="60%"}
+- Club and professional forum to learn/retool
+- Global network of chapters
+- Workshops vary from beginning to advanced
+- Polyglot (Python, Julia, R, etc.)
+:::
+
+::::
+
+## 
+
+### Application {.lato-font}
+
+1. Install uv (visit [docs.astral.sh/uv](https://docs.astral.sh/uv/getting-started/installation/)) via the command line
+2. Install Python using `uv python install`
+3. Register for a GitHub account (visit [github.com](https://github.com)) and fork a version of this workshop
+3. Download and install VS Code (visit [code.visualstudio.com](https://code.visualstudio.com)) and connect your GitHub account
+4. Inside VS Code, clone the forked workshop repository and activate the project environment with `uv run`
+5. Create a Python script or notebook and explore the included data
 

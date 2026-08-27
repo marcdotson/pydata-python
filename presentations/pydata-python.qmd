@@ -225,7 +225,7 @@ This is part of the reason why in some courses you'll use a **cloud-based soluti
 :::: {.columns .v-center}
 
 ::: {.column width="40%"}
-![](../../figures/logo_github.png){fig-align="center"}
+![](../figures/logo_github.png){fig-align="center"}
 :::
 
 ::: {.column width="60%"}

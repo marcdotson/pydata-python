@@ -308,8 +308,8 @@ Code is transparent and reproducible, but Python is a *big tent* so follow your 
 
 1. Install uv (visit [docs.astral.sh/uv](https://docs.astral.sh/uv/getting-started/installation/)) via the command line
 2. Install Python using `uv python install` via the command line
-3. Register for a GitHub account (visit [github.com](https://github.com)) and fork a version of this workshop
-4. Download and install VS Code (visit [code.visualstudio.com](https://code.visualstudio.com)) and connect your GitHub account
-5. Inside VS Code, clone the forked workshop repository and activate the project environment with `uv run` via the terminal
-6. Modify the Python script or notebook and explore the included data
+3. Register for a GitHub account (visit [github.com](https://github.com)) and download this workshop repository (visit [github.com/marcdotson/pydata-python](https://github.com/marcdotson/pydata-python))
+4. Download and install VS Code (visit [code.visualstudio.com](https://code.visualstudio.com)) and the Python extension in VS Code
+5. Inside VS Code, open the downloaded workshop repository and activate the project environment with `uv run` via the terminal
+6. Use and modify the Python script or notebook and explore the included data
 

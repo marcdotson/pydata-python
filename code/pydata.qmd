@@ -1,0 +1,84 @@
+---
+title: "CRM Report"
+format: typst
+---
+
+The following report is an exploratory data analysis of two tables from the customer relationship management (CRM) database.
+
+We'll first load the CRM data tables.
+
+```{python}
+import polars as pl
+import seaborn.objects as so
+import os
+
+# Load data.
+customer_data = pl.read_csv(os.path.join('..', 'data', 'customer_data.csv'))
+store_transactions = pl.read_csv(os.path.join('..', 'data', 'store_transactions.csv'))
+```
+
+Now we can start summarizing the data.
+
+```{python}
+# Visualize customers by region.
+(so.Plot(customer_data, x = 'region')
+  .add(so.Bar(), so.Hist())
+)
+```
+
+Clearly most customers are in the West region.
+
+```{python}
+# Number of customers by region.
+(customer_data
+  .group_by(pl.col('region'))
+  .agg(n = pl.len())
+)
+```
+
+There are a total of 5,095 customers in the West region.
+
+```{python}
+# Visualize income distribution.
+(so.Plot(customer_data, x = 'income')
+  .add(so.Bars(), so.Hist())
+)
+```
+
+It looks like the average income across customers is around $150,000 with a trailing right tail.
+
+```{python}
+# Average customer income.
+(customer_data
+  .select(pl.col('income'))
+  .mean()
+)
+```
+
+The average income is exactly $138,622.64.
+
+```{python}
+# Visualize relationship between income, credit, and gender by region.
+(so.Plot(customer_data, x = 'income', y = 'credit', color = 'gender')
+  .facet('region')
+  .add(so.Area(), so.Hist())
+)
+```
+
+We can look at far more sophisticated visualizations. Here we can see that the relationship between income and credit doesn't appear to vary by gender or region.
+
+```{python}
+# Summary of average income and credit by gender and region.
+(customer_data
+  .group_by(pl.col(['gender', 'region']))
+  .agg(
+    n = pl.len(), 
+    avg_income = pl.col('income').mean(), 
+    avg_credit = pl.col('credit').mean()
+  )
+  .sort(pl.col('avg_income'), descending=True)
+)
+```
+
+And here are the associated numeric summaries of those same variables.
+

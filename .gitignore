@@ -26,3 +26,4 @@
 
 /.quarto/
 **/*.quarto_ipynb
+**/*.quarto_ipynb_*

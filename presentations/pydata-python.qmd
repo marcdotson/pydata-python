@@ -82,11 +82,11 @@ jupyter: python3
 
 ## 
 
-![](../figures/positron-01_console-session.png){fig-align="center"}
+![](../figures/positron-01.png)
 
 ## 
 
-![](../figures/positron-06_command-palette.png){fig-align="center"}
+![](../figures/positron-02.png)
 
 ## 
 
@@ -101,7 +101,7 @@ jupyter: python3
 - Code editors (i.e., IDEs) are an essential tool in the modern tech stack
 - VS Code (and its *forks* like Cursor and Positron) are the industry standards
 - Integrated GitHub and SSH tools
-- Heavy use of the Command Palatte (Cmd/Cntrl+Shift+P)
+- Heavy use of the Command Palatte (Cmd/Ctrl+Shift+P)
 :::
 :::
 
@@ -118,7 +118,7 @@ jupyter: python3
 A Python environment is composed of the **Python version** and **library versions** (including dependencies)
 
 ```{python}
-#| code-line-numbers: "|1-3|1,3,5-7|2,18-21"
+#| code-line-numbers: "|1-3|1,3,5-7,14-18|2,9-12"
 
 import polars as pl
 import seaborn.objects as so
@@ -128,18 +128,15 @@ import os
 customer_data = pl.read_csv(os.path.join('data', 'customer_data.csv'))
 store_transactions = pl.read_csv(os.path.join('data', 'store_transactions.csv'))
 
-(customer_data
-  .join(store_transactions, on='customer_id', how='left')
-  .filter(pl.col('region') == 'West', pl.col('feb_2005') == pl.col('feb_2005').max())
-  .with_columns(age = 2024 - pl.col('birth_year'))
-  .select(pl.col(['age', 'feb_2005']))
-  .sort(pl.col('age'), descending=True)
-  .slice(0, 1)
-)
-
-# Customers by region.
+# Visualize customers by region.
 (so.Plot(customer_data, x = 'region')
   .add(so.Bar(), so.Hist())
+)
+
+# Number of customers by region.
+(customer_data
+  .group_by(pl.col('region'))
+  .agg(n = pl.len())
 )
 ```
 
@@ -180,7 +177,11 @@ This is part of the reason why in some courses you'll use a **cloud-based soluti
 
 ## 
 
-![](../figures/positron-01_console-session.png){fig-align="center"}
+![](../figures/positron-01.png)
+
+## 
+
+![](../figures/positron-03.png)
 
 ## 
 
@@ -210,13 +211,17 @@ This is part of the reason why in some courses you'll use a **cloud-based soluti
 
 ::: {.column width="60%"}
 ::: {.incremental}
-- Notebooks combine code and markdown, perfect for documenting a process and creating reports
+- Notebooks combine code and writing, perfect for documenting a process and creating reports
 - Jupyter notebooks don't play well with GitHub while Marimo and Quarto do
 - Quarto notebooks can be rendered into PDFs, Word documents, presentation slides, etc.
 :::
 :::
 
 ::::
+
+## 
+
+![](../figures/positron-04.png)
 
 # Version Control {background-color="#288DC2"}
 
@@ -252,10 +257,14 @@ Code is transparent and reproducible, but Python is a *big tent* so follow your 
 
 ::: {.incremental}
 - Coding for a custom analysis vs. coding for production
-- Code is interactive -- leverage it to practice what you're learning
+- Code is interactive---leverage it to confirm what you're learning
 - AI can accelerate productivity, but it can't replace learning
-- You have human help -- professors, peers, TAs, the ASC, etc.
+- You have human help---professors, peers, TAs, the ASC, etc.
 :::
+
+[Any other professorial recommendations to add?]{.fragment}
+
+# Questions? {background-color="#288DC2"}
 
 ## 
 
@@ -293,14 +302,14 @@ Code is transparent and reproducible, but Python is a *big tent* so follow your 
 
 ::::
 
-## 
+## {background-color="#0F2439"}
 
 ### Application {.lato-font}
 
 1. Install uv (visit [docs.astral.sh/uv](https://docs.astral.sh/uv/getting-started/installation/)) via the command line
-2. Install Python using `uv python install`
+2. Install Python using `uv python install` via the command line
 3. Register for a GitHub account (visit [github.com](https://github.com)) and fork a version of this workshop
-3. Download and install VS Code (visit [code.visualstudio.com](https://code.visualstudio.com)) and connect your GitHub account
-4. Inside VS Code, clone the forked workshop repository and activate the project environment with `uv run`
-5. Create a Python script or notebook and explore the included data
+4. Download and install VS Code (visit [code.visualstudio.com](https://code.visualstudio.com)) and connect your GitHub account
+5. Inside VS Code, clone the forked workshop repository and activate the project environment with `uv run` via the terminal
+6. Modify the Python script or notebook and explore the included data
 

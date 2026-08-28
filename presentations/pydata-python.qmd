@@ -100,7 +100,7 @@ jupyter: python3
 ::: {.incremental}
 - Code editors (i.e., IDEs) are an essential tool in the modern tech stack
 - VS Code (and its *forks* like Cursor and Positron) are the industry standards
-- Integrated GitHub and SSH tools
+- Extensible, including GitHub integration and SSH tools/Colab GPU access
 - Heavy use of the Command Palatte (Cmd/Ctrl+Shift+P)
 :::
 :::

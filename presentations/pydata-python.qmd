@@ -82,11 +82,11 @@ jupyter: python3
 
 ## 
 
-![](../figures/positron-01.png)
+![](../figures/positron-01_console-session.png)
 
 ## 
 
-![](../figures/positron-02.png)
+![](../figures/positron-08_command-palette.png)
 
 ## 
 
@@ -121,16 +121,16 @@ A Python environment is composed of the **Python version** and **library version
 #| code-line-numbers: "|1-3|1,3,5-7,14-18|2,9-12"
 
 import polars as pl
-import seaborn.objects as so
-import os
+from plotnine import *
+from pyhere import here
 
 # Load data.
-customer_data = pl.read_csv(os.path.join('data', 'customer_data.csv'))
-store_transactions = pl.read_csv(os.path.join('data', 'store_transactions.csv'))
+customer_data = pl.read_csv(here('data', 'customer_data.csv'))
+store_transactions = pl.read_csv(here('data', 'store_transactions.csv'))
 
 # Visualize customers by region.
-(so.Plot(customer_data, x = 'region')
-  .add(so.Bar(), so.Hist())
+(ggplot(customer_data, aes(x = 'region'))
+  + geom_bar()
 )
 
 # Number of customers by region.
@@ -177,11 +177,11 @@ This is part of the reason why in some courses you'll use a **cloud-based soluti
 
 ## 
 
-![](../figures/positron-01.png)
+![](../figures/positron-01_console-session.png)
 
 ## 
 
-![](../figures/positron-03.png)
+![](../figures/quarto-01_document.png)
 
 ## 
 
@@ -221,7 +221,11 @@ This is part of the reason why in some courses you'll use a **cloud-based soluti
 
 ## 
 
-![](../figures/positron-04.png)
+![](../figures/quarto-02_qmd-to-pdf.png)
+
+## 
+
+![](../figures/quarto-03_qmd-to-gfm.png)
 
 # Version Control {background-color="#288DC2"}
 

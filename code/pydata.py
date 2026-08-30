@@ -1,14 +1,14 @@
 import polars as pl
-import seaborn.objects as so
-import os
+from plotnine import *
+from pyhere import here
 
 # Load data.
-customer_data = pl.read_csv(os.path.join('data', 'customer_data.csv'))
-store_transactions = pl.read_csv(os.path.join('data', 'store_transactions.csv'))
+customer_data = pl.read_csv(here('data', 'customer_data.csv'))
+store_transactions = pl.read_csv(here('data', 'store_transactions.csv'))
 
 # Visualize customers by region.
-(so.Plot(customer_data, x = 'region')
-  .add(so.Bar(), so.Hist())
+(ggplot(customer_data, aes(x = 'region'))
+  + geom_bar()
 )
 
 # Number of customers by region.
@@ -18,8 +18,8 @@ store_transactions = pl.read_csv(os.path.join('data', 'store_transactions.csv'))
 )
 
 # Visualize income distribution.
-(so.Plot(customer_data, x = 'income')
-  .add(so.Bars(), so.Hist())
+(ggplot(customer_data, aes(x = 'income'))
+  + geom_histogram()
 )
 
 # Average customer income.
@@ -28,20 +28,28 @@ store_transactions = pl.read_csv(os.path.join('data', 'store_transactions.csv'))
   .mean()
 )
 
-# Visualize relationship between income, credit, and gender by region.
-(so.Plot(customer_data, x = 'income', y = 'credit', color = 'gender')
-  .facet('region')
-  .add(so.Area(), so.Hist())
+# Visualize relationship between income and gender by region.
+(ggplot(customer_data, aes(x = 'income', fill = 'gender', color = 'gender'))
+  + stat_bin(geom = 'area', alpha = 0.5, position = 'identity')
+  + facet_wrap('~region')
 )
 
-# Summary of average income and credit by gender and region.
+# Summary of average income by gender and region.
 (customer_data
   .group_by(pl.col(['gender', 'region']))
   .agg(
     n = pl.len(), 
-    avg_income = pl.col('income').mean(), 
-    avg_credit = pl.col('credit').mean()
+    avg_income = pl.col('income').mean()
   )
   .sort(pl.col('avg_income'), descending=True)
 )
 
+# How old is the customer in the West who purchased the most in Feb 2005?
+(customer_data
+  .join(store_transactions, on='customer_id', how='left')
+  .filter(pl.col('region') == 'West', pl.col('feb_2005') == pl.col('feb_2005').max())
+  .with_columns(age = 2024 - pl.col('birth_year'))
+  .select(pl.col(['age', 'feb_2005']))
+  .sort(pl.col('age'), descending = True)
+  .slice(0, 1)
+)
